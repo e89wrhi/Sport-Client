@@ -1,0 +1,12 @@
+export const DATA_LIMIT = 15;
+export const MODELS_LIMIT = 15;
+export const COMMENT_LIMIT = 20;
+export const TECHUSED_LIMIT = 25;
+export const USEDBY_LIMIT = 25;
+export const VERSIONS_LIMIT = 25;
+export const PROFILES_LIMIT = 15;
+export const SEARCHES_LIMIT = 10;
+export const RANKS_LIMIT = 25;
+export const REPORTS_LIMIT = 20;
+export const UPDATES_LIMIT = 20;
+export const USERS_LIMIT = 20;

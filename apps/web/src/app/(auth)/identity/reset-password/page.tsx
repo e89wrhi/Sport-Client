@@ -1,9 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Lock, Eye, EyeOff, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 export default function ResetPasswordPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,113 +23,112 @@ export default function ResetPasswordPage() {
     }, 2000);
   };
 
-  if (isSuccess) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-black">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="max-w-md w-full p-12 bg-neutral-900 border border-white/5 rounded-3xl text-center shadow-2xl"
-        >
-          <div className="w-16 h-16 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-6 text-orange-500">
-            <CheckCircle2 size={32} />
-          </div>
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Password reset!
-          </h2>
-          <p className="text-neutral-400 mb-10">
-            Your password has been successfully updated. You can now log in with
-            your new credentials.
-          </p>
-          <Link
-            href="/login"
-            className="block w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-bold transition-all shadow-lg shadow-indigo-500/20"
-          >
-            Back to Login
-          </Link>
-        </motion.div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -bottom-[10%] -left-[10%] w-[40%] h-[40%] bg-indigo-500/5 blur-[100px] rounded-full" />
-      </div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-md w-full px-4"
-      >
-        <div className="p-10 bg-neutral-900/80 backdrop-blur-xl border border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden shadow-indigo-500/5">
-          <div className="mb-10 text-center">
-            <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-white/10">
-              <Lock size={24} className="text-white" />
-            </div>
-            <h2 className="text-3xl font-bold text-white mb-2">
-              Create New Password
+    <AnimatePresence mode="wait">
+      {isSuccess ? (
+        <motion.div
+          key="success"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          className="text-center space-y-6 py-8"
+        >
+          <div className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto text-emerald-500">
+            <CheckCircle2 size={40} />
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-bold tracking-tight">
+              Password Reset!
             </h2>
-            <p className="text-neutral-500 text-sm">
-              Choose a strong password to protect your account.
+            <p className="text-neutral-400 text-sm max-w-[280px] mx-auto leading-relaxed">
+              Your password has been successfully updated. You can now log in
+              with your new credentials.
+            </p>
+          </div>
+          <div className="pt-4">
+            <Button
+              asChild
+              className="cursor-pointer w-full h-12 bg-yellow-600 hover:bg-yellow-500 rounded-xl font-bold shadow-lg shadow-yellow-600/20 active:scale-[0.98]"
+            >
+              <Link href="/login">Back to Login</Link>
+            </Button>
+          </div>
+        </motion.div>
+      ) : (
+        <motion.div
+          key="form"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          className="space-y-6"
+        >
+          <div className="text-center">
+            <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 border">
+              <Lock size={20} />
+            </div>
+            <h2 className="text-xl font-bold tracking-tight">New Password</h2>
+            <p className="text-neutral-400 text-sm mt-1">
+              Please choose a strong password.
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold text-neutral-500 uppercase tracking-[0.2em] ml-1">
-                  New Password
-                </label>
-                <div className="relative group">
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="••••••••"
-                    className="w-full px-5 py-4 bg-black border border-white/5 rounded-2xl text-white placeholder:text-neutral-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 transition-all group-hover:border-white/20"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-600 hover:text-white transition-colors"
-                  >
-                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                  </button>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold text-neutral-500 uppercase tracking-[0.2em] ml-1">
-                  Confirm Password
-                </label>
-                <div className="relative group">
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="••••••••"
-                    className="w-full px-5 py-4 bg-black border border-white/5 rounded-2xl text-white placeholder:text-neutral-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 transition-all group-hover:border-white/20"
-                    required
-                  />
-                </div>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="space-y-1.5">
+              <Label className="text-xs font-bold text-neutral-400 uppercase tracking-wider ml-1">
+                New Password
+              </Label>
+              <div className="relative">
+                <Input
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="••••••••"
+                  className="h-11 rounded-full focus-visible:ring-yellow-500/30 pr-11 transition-all"
+                  required
+                  disabled={isLoading}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white transition-colors p-1"
+                >
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
               </div>
             </div>
 
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full py-5 bg-white text-black hover:invert rounded-2xl font-black text-sm uppercase tracking-widest transition-all active:scale-[0.98] disabled:opacity-50 ring-offset-4 ring-offset-black transition-all"
-            >
-              {isLoading ? 'Saving...' : 'Confirm New Password'}
-            </button>
-          </form>
+            <div className="space-y-1.5">
+              <Label className="text-xs font-bold text-neutral-400 uppercase tracking-wider ml-1">
+                Confirm Password
+              </Label>
+              <Input
+                type={showPassword ? 'text' : 'password'}
+                placeholder="••••••••"
+                className="h-11 rounded-full focus-visible:ring-yellow-500/30 transition-all"
+                required
+                disabled={isLoading}
+              />
+            </div>
 
-          <div className="mt-8 flex justify-center gap-2">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-1 w-8 rounded-full bg-white/10" />
-            ))}
-          </div>
-        </div>
-      </motion.div>
-    </div>
+            <div className="pt-4">
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="cursor-pointer w-full h-12 hover:bg-neutral-200 rounded-full font-bold transition-all active:scale-[0.98] disabled:opacity-50"
+              >
+                {isLoading ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 rounded-full animate-spin" />
+                    <span>Saving...</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <span>Update Password</span>
+                  </div>
+                )}
+              </Button>
+            </div>
+          </form>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

@@ -1,5 +1,12 @@
+<p align="center">
+  <img src="assets/sports_logo.png" alt="Sports-Client-Logo" width="120">
+</p>
+
 # Sport App
 
+<p align="center">
+  <img src="assets/sports_banner.png" alt="Sports Platform Banner" width="100%">
+</p>
 Sport App is a modern web platform designed to showcase real-time football matches, enable user voting, and leverage AI for match predictions. This project is built as a monorepo using [Turborepo](https://turbo.build/) and serves as a frontend showcase for a .NET backend enhanced with Microsoft Extensions AI.
 
 ## 🌟 Features

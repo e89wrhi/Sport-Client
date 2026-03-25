@@ -9,6 +9,14 @@
 </p>
 Sport App is a modern web platform designed to showcase real-time football matches, enable user voting, and leverage AI for match predictions. This project is built as a monorepo using [Turborepo](https://turbo.build/) and serves as a frontend showcase for a .NET backend enhanced with Microsoft Extensions AI.
 
+## 🧩 More
+
+Related Visit
+
+- 🖥️ Frontend → https://github.com/username/project-frontend  
+- ⚙️ Backend → https://github.com/username/project-backend  
+- ☁️ Site → https://github.com/username/project-devops  
+
 ## 🌟 Features
 
 - **Real-time Match Updates**: Stay up to date with live football match events and scores.

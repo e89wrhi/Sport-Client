@@ -24,6 +24,7 @@ The Web App is the primary user-facing application of the Sport App ecosystem. I
 This project is integrated within the Sport App monorepo.
 
 1. Navigate to the web application directory:
+
    ```bash
    cd apps/web
    ```

@@ -13,9 +13,9 @@ Sport App is a modern web platform designed to showcase real-time football match
 
 Related Visit
 
-- 🖥️ Frontend → https://github.com/username/project-frontend  
-- ⚙️ Backend → https://github.com/username/project-backend  
-- ☁️ Site → https://github.com/username/project-devops  
+- 🖥️ Frontend → https://github.com/username/project-frontend
+- ⚙️ Backend → https://github.com/username/project-backend
+- ☁️ Site → https://github.com/username/project-devops
 
 ## 🌟 Features
 
@@ -30,10 +30,12 @@ Related Visit
 This repository is structured as a monorepo containing multiple applications and shared packages:
 
 ### Applications
+
 - **`apps/web`**: The main user-facing application where users can discover matches, vote, and see AI predictions.
 - **`apps/admin`**: The administrative portal for managing the platform's content, including matches and live events.
 
 ### Shared Packages
+
 - **`packages/ui`**: Shared UI components built with React, Radix UI, and Tailwind CSS.
 - **`packages/lib`**: Shared utilities, type definitions, and configurations.
 - **`packages/typescript-config`**: Shared `tsconfig.json` bases across the workspace.
@@ -53,12 +55,14 @@ This repository is structured as a monorepo containing multiple applications and
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - [Node.js](https://nodejs.org/) (v18 or higher)
 - [npm](https://www.npmjs.com/) package manager
 
 ### Installation
 
 1. Clone the repository and navigate into it:
+
    ```bash
    git clone <repository-url>
    cd Sport-Client
@@ -96,4 +100,5 @@ npm run build
 - **Tooling**: [Turborepo](https://turbo.build/), ESLint, Prettier
 
 ## 🔗 Backend API
+
 This frontend connects to a robust backend built with [.NET](https://dotnet.microsoft.com/) and utilizes Microsoft Extensions AI to deliver reliable, real-time data and intelligent functional features.

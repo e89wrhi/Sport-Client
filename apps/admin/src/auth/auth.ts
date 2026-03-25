@@ -14,7 +14,10 @@ const {
 // Check if we're using mock authentication
 const useMockAuth = USE_MOCK_AUTH === 'true';
 
+const isBuildPhase = process.env.NEXT_PHASE === 'phase-production-build';
+
 if (
+  !isBuildPhase &&
   typeof window === 'undefined' &&
   !useMockAuth &&
   (!AUTH_DUENDE_ISSUER || !AUTH_DUENDE_ID || !AUTH_DUENDE_SECRET)

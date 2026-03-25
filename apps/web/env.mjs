@@ -3,16 +3,14 @@ import { z } from 'zod';
 
 export const env = createEnv({
   server: {
-    FMP_API_KEY: z.string().min(1).optional(),
-
   },
   client: {
-    NEXT_PUBLIC_APP_URL: z.string().min(1),
+    NEXT_PUBLIC_APP_URL: z.string().min(1).optional().default('http://localhost:3000'),
   },
   runtimeEnv: {
-    FMP_API_KEY: process.env.FMP_API_KEY,
-    
     // Client-side
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
   },
+  // Skip validation during CI/build if SKIP_ENV_VALIDATION is set
+  skipValidation: !!process.env.SKIP_ENV_VALIDATION,
 });

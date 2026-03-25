@@ -23,6 +23,7 @@ The Admin Portal is a dedicated internal application for managing the Sport App 
 Because this application is part of a Turborepo workspace, it is recommended to run installation and core commands from the root directory. However, you can also operate it individually.
 
 1. Navigate to the admin directory:
+
    ```bash
    cd apps/admin
    ```

@@ -30,6 +30,18 @@ This repository is structured as a monorepo containing multiple applications and
 - **`packages/lib`**: Shared utilities, type definitions, and configurations.
 - **`packages/typescript-config`**: Shared `tsconfig.json` bases across the workspace.
 
+## 📸 Screenshots
+
+<p align="center">
+  <img src="assets/ss/ss1.png" width="45%" />
+  <img src="assets/ss/ss2.png" width="45%" />
+</p>
+
+<p align="center">
+  <img src="assets/ss/ss3.png" width="45%" />
+  <img src="assets/ss/ss4.png" width="45%" />
+</p>
+
 ## 🚀 Getting Started
 
 ### Prerequisites

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/auth/auth';
-import { v4 as uuidv4 } from 'uuid';
 
 const locales = ['en', 'am'];
 
@@ -21,7 +20,7 @@ function isRouteMatch(pathname: string, routes: string[]) {
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const requestId = uuidv4();
+  const requestId = crypto.randomUUID();
 
   // bad response when no redirect
   const response = NextResponse.next();
@@ -44,7 +43,22 @@ export async function middleware(req: NextRequest) {
   }
 
   // auth
-  const session = await auth();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let session: any = null;
+  try {
+    session = await auth();
+  } catch (err) {
+    console.error('[middleware] auth() threw — redirecting to /login:', err);
+    const loginUrl = new URL('/login', req.url);
+    loginUrl.searchParams.set(
+      'callbackUrl',
+      req.nextUrl.pathname + req.nextUrl.search
+    );
+    const redirect = NextResponse.redirect(loginUrl);
+    redirect.headers.set('x-request-uuid', requestId);
+    return redirect;
+  }
+
   const isLoggedIn = !!session;
   const authError = session?.error;
 

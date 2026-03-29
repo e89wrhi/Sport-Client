@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/auth/auth';
 
+// Auth is only functional when the required env vars are set OR mock mode is on.
+const isAuthConfigured =
+  process.env.USE_MOCK_AUTH === 'true' ||
+  (!!process.env.AUTH_DUENDE_ISSUER &&
+    !!process.env.AUTH_DUENDE_ID &&
+    !!process.env.AUTH_DUENDE_SECRET);
+
 const locales = ['en', 'am'];
 
 const authRoutes = [
@@ -45,18 +52,20 @@ export async function middleware(req: NextRequest) {
   // auth
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let session: any = null;
-  try {
-    session = await auth();
-  } catch (err) {
-    console.error('[middleware] auth() threw — redirecting to /login:', err);
-    const loginUrl = new URL('/login', req.url);
-    loginUrl.searchParams.set(
-      'callbackUrl',
-      req.nextUrl.pathname + req.nextUrl.search
-    );
-    const redirect = NextResponse.redirect(loginUrl);
-    redirect.headers.set('x-request-uuid', requestId);
-    return redirect;
+  if(isAuthConfigured) {
+    try {
+      session = await auth();
+    } catch (err) {
+      console.error('[middleware] auth() threw — redirecting to /login:', err);
+      const loginUrl = new URL('/login', req.url);
+      loginUrl.searchParams.set(
+        'callbackUrl',
+        req.nextUrl.pathname + req.nextUrl.search
+      );
+      const redirect = NextResponse.redirect(loginUrl);
+      redirect.headers.set('x-request-uuid', requestId);
+      return redirect;
+    }
   }
 
   const isLoggedIn = !!session;

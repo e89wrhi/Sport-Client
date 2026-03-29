@@ -16,15 +16,16 @@ const useMockAuth = USE_MOCK_AUTH === 'true';
 
 const isBuildPhase = process.env.NEXT_PHASE === 'phase-production-build';
 
-if (
-  !isBuildPhase &&
-  typeof window === 'undefined' &&
+const missingDuendeVars =
   !useMockAuth &&
-  (!AUTH_DUENDE_ISSUER || !AUTH_DUENDE_ID || !AUTH_DUENDE_SECRET)
-) {
-  throw new Error(
-    'Missing required Duende IdentityServer environment variables: AUTH_DUENDE_ISSUER, AUTH_DUENDE_ID, AUTH_DUENDE_SECRET. ' +
-      'Set USE_MOCK_AUTH=true in .env.local to use mock authentication for development.'
+  (!AUTH_DUENDE_ISSUER || !AUTH_DUENDE_ID || !AUTH_DUENDE_SECRET);
+
+if (missingDuendeVars) {
+  // In production without Duende vars — log and fall back gracefully.
+  // Set USE_MOCK_AUTH=true or configure the Duende env vars in Vercel.
+  console.error(
+    '[auth] Missing Duende env vars: AUTH_DUENDE_ISSUER, AUTH_DUENDE_ID, AUTH_DUENDE_SECRET. ' +
+    'Set USE_MOCK_AUTH=true or configure the vars in your Vercel project settings.'
   );
 }
 

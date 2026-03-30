@@ -1,17 +1,25 @@
 import { createHmac } from 'crypto';
 
-// Mock OIDC Provider for Development
+// Derive the base URL at runtime so this works in both dev (localhost:3000)
+// and Vercel production (https://<your-app>.vercel.app).
+// NEXTAUTH_URL must be set in Vercel project settings.
+const getMockBaseUrl = () =>
+  (process.env.NEXTAUTH_URL || 'http://localhost:3000').replace(/\/$/, '');
+
+// Mock OIDC Provider for Development/Staging (USE_MOCK_AUTH=true)
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const MockDuendeProvider: any = {
   id: 'duende',
   name: 'Mock Duende (Dev Only)',
-  type: 'oauth',
+  type: 'oidc',
 
-  clientId: 'public-site-mock',
+  clientId: 'user-portal-mock',
   clientSecret: 'mock-secret',
 
-  // Explicitly set issuer to match the 'iss' claim in our tokens
-  issuer: 'http://localhost:3000/api/auth/mock',
+  // Issuer is derived at runtime so JWT 'iss' claim always matches, even on Vercel.
+  get issuer() {
+    return `${getMockBaseUrl()}/api/auth/mock`;
+  },
 
   // Configure NextAuth to accept HS256 signed ID tokens using the client_secret
   client: {
@@ -19,12 +27,14 @@ export const MockDuendeProvider: any = {
   },
   idToken: true,
 
-  authorization: {
-    url: 'http://localhost:3000/api/auth/mock/authorize',
-    params: {
-      scope: 'openid profile email sports.api offline_access',
-      response_type: 'code',
-    },
+  get authorization() {
+    return {
+      url: `${getMockBaseUrl()}/api/auth/mock/authorize`,
+      params: {
+        scope: 'openid profile email sports.api offline_access',
+        response_type: 'code',
+      },
+    };
   },
 
   checks: [],
@@ -44,23 +54,25 @@ export const MockDuendeProvider: any = {
   },
 
   // Override token endpoint to use mock
-  token: {
-    url: 'http://localhost:3000/api/auth/mock/token',
+  get token() {
+    return { url: `${getMockBaseUrl()}/api/auth/mock/token` };
   },
 
   // Override userinfo endpoint to use mock
-  userinfo: {
-    url: 'http://localhost:3000/api/auth/mock/userinfo',
+  get userinfo() {
+    return { url: `${getMockBaseUrl()}/api/auth/mock/userinfo` };
   },
 
-  // Override well-known endpoint - Disabled to prevent server-side fetch issues
-  // wellKnown: 'http://localhost:3000/api/auth/mock/.well-known/openid-configuration',
+  // Override well-known endpoint
+  get wellKnown() {
+    return `${getMockBaseUrl()}/api/auth/mock/.well-known/openid-configuration`;
+  },
 };
 
 // Aligned with mock user data from src/mock/users/index.ts
 export const MOCK_USERS = {
   user: {
-    sub: 'adm-001', // Matches Elias Mekonnen
+    sub: 'usr-001',
     userId: 'usr-001',
     name: 'Elias Mekonnen',
     email: 'elias.mekonnen@gmail.local',
@@ -69,21 +81,12 @@ export const MOCK_USERS = {
     role: ['user'],
     permission: [],
   },
-  user2: {
-    sub: 'adm-002', // Matches Sara Getachew
-    userId: 'usr-002',
-    name: 'Sara Getachew',
-    email: 'sara.getachew@sports.local',
-    preferred_username: 'sara',
-    picture: '/images/user2.jpg',
-    role: ['user'],
-    permission: [],
-  },
 };
 
 export function generateMockTokens(userType: keyof typeof MOCK_USERS = 'user') {
   const user = MOCK_USERS[userType];
   const now = Math.floor(Date.now() / 1000);
+  const baseUrl = getMockBaseUrl();
 
   // Mock access token
   const accessToken = `mock_access_token_${userType}_${now}`;
@@ -104,8 +107,9 @@ export function generateMockTokens(userType: keyof typeof MOCK_USERS = 'user') {
     permission: user.permission,
     iat: now,
     exp: now + 3600,
-    iss: 'http://localhost:3000/api/auth/mock',
-    aud: 'public-site-mock',
+    // 'iss' must match MockDuendeProvider.issuer — derived from NEXTAUTH_URL
+    iss: `${baseUrl}/api/auth/mock`,
+    aud: 'user-portal-mock',
   };
 
   const base64UrlEncode = (str: string) =>

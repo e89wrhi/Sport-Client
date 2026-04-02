@@ -17,7 +17,7 @@ export default async function CreateEventPage({ params }: PageProps) {
   const { id } = await params;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white dark:bg-black">
       <Suspense fallback={<LoadingView />}>
         <DataLoader id={id} />
       </Suspense>

@@ -25,7 +25,7 @@ export default async function MatchListsPage({ searchParams }: PageProps) {
   const location = searchParamsResolved.location || LocationType.Global;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white dark:bg-black">
       <Suspense fallback={<LoadingView />}>
         <DataLoader type={type} location={location} />
       </Suspense>

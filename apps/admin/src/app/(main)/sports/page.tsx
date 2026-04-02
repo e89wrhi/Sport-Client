@@ -24,7 +24,7 @@ export default async function MatchListsPage({ searchParams }: PageProps) {
   const status = searchParamsResolved.status || MatchStatus.Upcoming;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white dark:bg-black">
       <Suspense fallback={<LoadingView />}>
         <DataLoader type={type} status={status} />
       </Suspense>

@@ -9,7 +9,7 @@ import LoadingView from '@/components/layout/state/loading-view';
 
 export default async function SettingsPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white dark:bg-black">
       <Suspense fallback={<LoadingView />}>
         <DataLoader />
       </Suspense>

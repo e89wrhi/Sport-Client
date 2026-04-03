@@ -31,18 +31,18 @@ export default function NotificationBar() {
 
           <div className="flex items-center gap-3">
             <Link
-              href={`/https://github.com/`}
+              href={`https://github.com/e89wrhi/sports-client`}
               target="_blank"
               className="text-[11px] font-bold hover:underline underline-offset-4 text-foreground/90 transition-colors px-2 py-0.5"
             >
-              FE Repo
+              Client
             </Link>
             <Link
-              href={`/https://github.com/`}
+              href={`https://github.com/e89wrhi/sports-net`}
               target="_blank"
               className="text-[11px] font-bold hover:underline underline-offset-4 text-foreground/90 transition-colors px-2 py-0.5"
             >
-              BE Repo
+              Backend
             </Link>
             <button
               onClick={() => setIsVisible(false)}

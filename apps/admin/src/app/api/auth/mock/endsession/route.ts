@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { env } from 'env.mjs';
 
 /* ------------------------------------------------------------------
  * Mock OIDC End Session Endpoint
@@ -24,6 +25,6 @@ export async function GET(request: NextRequest) {
   }
 
   // Default fallback if no redirect URI is provided
-  const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3001';
+  const baseUrl = process.env.NEXTAUTH_URL || env.NEXT_PUBLIC_APP_URL;
   return NextResponse.redirect(baseUrl);
 }

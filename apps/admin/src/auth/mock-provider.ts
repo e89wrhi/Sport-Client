@@ -1,10 +1,11 @@
 import { createHmac } from 'crypto';
+import { env } from 'env.mjs';
 
-// Derive the base URL at runtime so this works in both dev (localhost:3000)
+// Derive the base URL at runtime so this works in both dev (localhosst:3000)
 // and Vercel production (https://<your-app>.vercel.app).
 // NEXTAUTH_URL must be set in Vercel project settings.
 const getMockBaseUrl = () =>
-  (process.env.NEXTAUTH_URL || 'http://localhost:3001').replace(/\/$/, '');
+  (process.env.NEXTAUTH_URL || env.NEXT_PUBLIC_APP_URL).replace(/\/$/, '');
 
 // Mock OIDC Provider for Development
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

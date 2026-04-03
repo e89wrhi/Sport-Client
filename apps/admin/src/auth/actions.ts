@@ -1,6 +1,7 @@
 'use server';
 
 import { auth } from './auth';
+import { env } from 'env.mjs';
 
 // get the duende identity-server logout url
 export async function getDuendeLogoutUrl() {
@@ -16,7 +17,7 @@ export async function getDuendeLogoutUrl() {
   const useMockAuth = process.env.USE_MOCK_AUTH === 'true';
   // Use the Duende IdentityServer issuer or fallback to mock
   const issuer = useMockAuth
-    ? (process.env.NEXTAUTH_URL || 'http://localhost:3001') + '/api/auth/mock'
+    ? (process.env.NEXTAUTH_URL || env.NEXT_PUBLIC_APP_URL) + '/api/auth/mock'
     : process.env.AUTH_DUENDE_ISSUER;
 
   if (!issuer) {
@@ -26,7 +27,7 @@ export async function getDuendeLogoutUrl() {
 
   // The address the user should wind up at after logout
   const postLogoutRedirectUri =
-    process.env.NEXTAUTH_URL || 'http://localhost:3001';
+    process.env.NEXTAUTH_URL || env.NEXT_PUBLIC_APP_URL;
 
   // logout endpoint - Real Duende uses /connect/endsession, but our Mock uses /endsession (relative to the mock api root)
   const endpoint = useMockAuth ? '/endsession' : '/connect/endsession';

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { env } from 'env.mjs';
 //import {
 //  getMockUserInfo,
 //  generateMockTokens,
@@ -10,7 +11,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function GET(request: NextRequest) {
-  const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3001';
+  const baseUrl = process.env.NEXTAUTH_URL || env.NEXT_PUBLIC_APP_URL;
 
   const wellKnownConfig = {
     issuer: `${baseUrl}/api/auth/mock`,

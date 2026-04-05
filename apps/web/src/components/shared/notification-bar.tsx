@@ -19,11 +19,11 @@ export default function NotificationBar() {
         )}
       >
         <div className="container mx-auto px-4 h-10 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="text-muted-foreground">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="text-muted-foreground flex-shrink-0">
               <Github className="h-4 w-4" />
             </div>
-            <p className="text-xs font-medium text-foreground/80 tracking-tight">
+            <p className="text-xs font-medium text-foreground/80 tracking-tight whitespace-nowrap truncate">
               Developer Preview: Currently running with simulated(mock) data
               streams for testing.
             </p>

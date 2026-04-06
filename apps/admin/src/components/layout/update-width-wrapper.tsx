@@ -13,7 +13,7 @@ export default function UpdateWidthWrapper({
     <div
       className={cn(
         'container',
-        'p-4 md:p-8 max-w-5xl mx-auto space-y-6',
+        'bg-white dark:bg-black p-4 md:p-8 max-w-5xl mx-auto space-y-6',
         className
       )}
     >

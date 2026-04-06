@@ -13,7 +13,7 @@ export default function ListWidthWrapper({
     <div
       className={cn(
         'container',
-        'p-4 md:p-8 max-w-6xl mx-auto space-y-6',
+        'bg-white dark:bg-black p-4 md:p-8 max-w-6xl mx-auto space-y-6',
         className
       )}
     >

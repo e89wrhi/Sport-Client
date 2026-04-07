@@ -108,7 +108,7 @@ export function SportNavMobile({ userProfile: profile }: Props) {
             ) : (
               <div className="flex flex-col space-y-3">
                 <p className="text-sm text-muted-foreground">
-                  Welcome to Tribal Journal
+                  Welcome to Sports
                 </p>
                 <div className="flex space-x-2">
                   <Link

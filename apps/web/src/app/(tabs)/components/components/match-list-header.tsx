@@ -28,7 +28,7 @@ export default function MatchsListHeader(props: Props) {
   } = props;
 
   return (
-    <div className="mx-2 mt-15">
+    <div className="mt-8 md:mt-12">
       {/* list header */}
       <div className="sticky top-0 z-10 bg-white dark:bg-black w-full pt-6 space-y-8">
         {/* Bottom Row: Title and Actions */}
@@ -44,10 +44,10 @@ export default function MatchsListHeader(props: Props) {
       </div>
 
       {/* Filters (Topic + Location) */}
-      <div className="flex flex-row items-center gap-4 mt-4 mb-6">
+      <div className="flex flex-col sm:flex-row items-center gap-4 mt-4 mb-6">
         <Select value={topic} onValueChange={onTopicChange}>
           <SelectTrigger
-            className="shadow-none rounded-full w-56 h-12 border-none 
+            className="shadow-none rounded-full w-full sm:w-56 h-12 border-none 
           bg-neutral-200 dark:bg-neutral-800 
           text-gray-800 dark:text-gray-100 hover:bg-gray-200
           text-lg"
@@ -71,7 +71,7 @@ export default function MatchsListHeader(props: Props) {
         </Select>
         <Select value={location} onValueChange={onLocationChange}>
           <SelectTrigger
-            className="shadow-none rounded-full w-56 h-12 border-0 
+            className="shadow-none rounded-full w-full sm:w-56 h-12 border-0 
           bg-neutral-200 dark:bg-neutral-800 
           text-gray-800 dark:text-gray-100 hover:bg-gray-200
           text-lg"

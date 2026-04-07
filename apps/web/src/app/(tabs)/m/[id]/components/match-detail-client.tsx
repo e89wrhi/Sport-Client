@@ -190,37 +190,37 @@ export default function MatchDetailClient({ id }: Props) {
         </div>
 
         {/* Scoreboard */}
-        <div className="relative w-full flex items-center justify-between max-w-6xl px-4 md:px-12 py-16 bg-card/80 backdrop-blur-sm rounded-[3rem] shadow-xl overflow-hidden group">
+        <div className="relative w-full flex items-center justify-between max-w-6xl px-4 md:px-12 py-8 md:py-16 bg-card/80 backdrop-blur-sm rounded-[2rem] md:rounded-[3rem] shadow-xl overflow-hidden group">
           <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
 
           {/* Home Team */}
-          <div className="flex flex-col items-center gap-4 flex-1 z-10">
+          <div className="flex flex-col items-center gap-2 md:gap-4 flex-1 z-10">
             <div className="relative">
-              <Avatar className="w-24 h-24 md:w-36 md:h-36 border-4 border-muted/50 p-2 bg-background/50 backdrop-blur transition-transform group-hover:scale-105 duration-500">
+              <Avatar className="w-16 h-16 md:w-36 md:h-36 border-2 md:border-4 border-muted/50 p-1 md:p-2 bg-background/50 backdrop-blur transition-transform group-hover:scale-105 duration-500">
                 <AvatarImage
                   src={data.HomeTeam}
                   alt={data.HomeTeam}
                   className="object-contain"
                 />
-                <AvatarFallback className="text-3xl font-bold">
+                <AvatarFallback className="text-xl md:text-3xl font-bold">
                   {data.HomeTeam.substring(0, 1).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <div className="absolute -bottom-2 -right-2 bg-orange-500 w-6 h-6 rounded-full border-4 border-card flex items-center justify-center">
-                <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+              <div className="absolute -bottom-1 -right-1 md:-bottom-2 md:-right-2 bg-orange-500 w-4 h-4 md:w-6 md:h-6 rounded-full border-2 md:border-4 border-card flex items-center justify-center">
+                <div className="w-1 md:w-1.5 h-1 md:h-1.5 rounded-full bg-white animate-pulse" />
               </div>
             </div>
-            <h2 className="text-xl md:text-3xl font-black text-center tracking-tight">
+            <h2 className="text-sm md:text-3xl font-black text-center tracking-tight line-clamp-2">
               {data.HomeTeam}
             </h2>
-            <p className="text-muted-foreground text-xs uppercase font-black tracking-widest opacity-50">
+            <p className="text-[10px] md:text-xs text-muted-foreground uppercase font-black tracking-widest opacity-50">
               Home
             </p>
           </div>
 
           {/* Score */}
-          <div className="flex flex-col items-center gap-3 mx-6 z-10">
-            <div className="text-6xl md:text-8xl font-black tabular-nums tracking-tighter flex items-center gap-4 drop-shadow-2xl">
+          <div className="flex flex-col items-center gap-1 md:gap-3 mx-2 md:mx-6 z-10">
+            <div className="text-3xl md:text-8xl font-black tabular-nums tracking-tighter flex items-center gap-2 md:gap-4 drop-shadow-2xl">
               <span className="text-primary">{data.HomeTeamScore}</span>
               <span className="text-muted-foreground/10">:</span>
               <span>{data.AwayTeamScore}</span>
@@ -228,35 +228,35 @@ export default function MatchDetailClient({ id }: Props) {
             {isLive ? (
               <Badge
                 variant="destructive"
-                className="animate-pulse px-4 py-1 font-black text-xs uppercase tracking-[0.2em]"
+                className="animate-pulse px-2 md:px-4 py-0.5 md:py-1 font-black text-[8px] md:text-xs uppercase tracking-[0.2em]"
               >
-                Live Now
+                Live
               </Badge>
             ) : (
-              <span className="text-muted-foreground/40 font-bold text-sm tracking-widest uppercase">
-                Full Time
+              <span className="text-muted-foreground/40 font-bold text-[8px] md:text-sm tracking-widest uppercase">
+                FT
               </span>
             )}
           </div>
 
           {/* Away Team */}
-          <div className="flex flex-col items-center gap-4 flex-1 z-10">
+          <div className="flex flex-col items-center gap-2 md:gap-4 flex-1 z-10">
             <div className="relative">
-              <Avatar className="w-24 h-24 md:w-36 md:h-36 border-4 border-muted/50 p-2 bg-background/50 backdrop-blur transition-transform group-hover:scale-105 duration-500">
+              <Avatar className="w-16 h-16 md:w-36 md:h-36 border-2 md:border-4 border-muted/50 p-1 md:p-2 bg-background/50 backdrop-blur transition-transform group-hover:scale-105 duration-500">
                 <AvatarImage
                   src={data.AwayTeam}
                   alt={data.AwayTeam}
                   className="object-contain"
                 />
-                <AvatarFallback className="text-3xl font-bold">
+                <AvatarFallback className="text-xl md:text-3xl font-bold">
                   {data.AwayTeam.substring(0, 2).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
             </div>
-            <h2 className="text-xl md:text-3xl font-black text-center tracking-tight">
+            <h2 className="text-sm md:text-3xl font-black text-center tracking-tight line-clamp-2">
               {data.AwayTeam}
             </h2>
-            <p className="text-muted-foreground text-xs uppercase font-black tracking-widest opacity-50">
+            <p className="text-[10px] md:text-xs text-muted-foreground uppercase font-black tracking-widest opacity-50">
               Away
             </p>
           </div>

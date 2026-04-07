@@ -13,18 +13,18 @@ export default function MatchDetailLoading() {
         </div>
 
         {/* Scoreboard Skeleton */}
-        <div className="w-full flex items-center justify-between max-w-4xl px-4 md:px-12 py-10 bg-card/60 backdrop-blur-sm border rounded-[2rem] shadow-xl">
-          <div className="flex flex-col items-center gap-4 flex-1">
-            <Skeleton className="w-24 h-24 md:w-36 md:h-36 rounded-full" />
-            <Skeleton className="h-8 w-32" />
+        <div className="w-full flex items-center justify-between max-w-4xl px-4 md:px-12 py-8 md:py-16 bg-card/60 backdrop-blur-sm border rounded-[1.5rem] md:rounded-[3rem] shadow-xl">
+          <div className="flex flex-col items-center gap-2 md:gap-4 flex-1">
+            <Skeleton className="w-16 h-16 md:w-36 md:h-36 rounded-full" />
+            <Skeleton className="h-4 md:h-8 w-20 md:w-32" />
           </div>
-          <div className="flex flex-col items-center gap-3 mx-6">
-            <Skeleton className="h-16 w-32 md:h-24 md:w-48" />
-            <Skeleton className="h-6 w-20 rounded-full" />
+          <div className="flex flex-col items-center gap-1 md:gap-3 mx-2 md:mx-6">
+            <Skeleton className="h-8 md:h-24 w-12 md:w-48" />
+            <Skeleton className="h-4 md:h-6 w-10 md:w-20 rounded-full" />
           </div>
-          <div className="flex flex-col items-center gap-4 flex-1">
-            <Skeleton className="w-24 h-24 md:w-36 md:h-36 rounded-full" />
-            <Skeleton className="h-8 w-32" />
+          <div className="flex flex-col items-center gap-2 md:gap-4 flex-1">
+            <Skeleton className="w-16 h-16 md:w-36 md:h-36 rounded-full" />
+            <Skeleton className="h-4 md:h-8 w-20 md:w-32" />
           </div>
         </div>
 

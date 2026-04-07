@@ -199,7 +199,7 @@ export default function MatchesClient(props: Props) {
         {/* success view */}
         {!isLoading && !isError && allItems.length !== 0 && (
           <div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               {allItems.map((item, index) => (
                 <MatchesItem
                   key={item.Id}

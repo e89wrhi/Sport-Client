@@ -25,18 +25,18 @@ export function VoteChart({
   const awayPercent = total > 0 ? (awayVotes / total) * 100 : 0;
 
   return (
-    <Card className="w-full bg-card/40 backdrop-blur-md border border-border/40 rounded-[2rem] overflow-hidden">
-      <CardContent className="p-8 space-y-8">
+    <Card className="w-full bg-card/40 backdrop-blur-md border border-border/40 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden">
+      <CardContent className="p-4 md:p-8 space-y-4 md:space-y-8">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
             <h4 className="text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/50">
               Fans Sentiment
             </h4>
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-black tabular-nums">
+            <div className="flex items-center gap-1.5 md:gap-2">
+              <span className="text-lg md:text-2xl font-black tabular-nums">
                 {total.toLocaleString()}
               </span>
-              <span className="text-xs font-bold text-muted-foreground">
+              <span className="text-[10px] md:text-xs font-bold text-muted-foreground">
                 Votes
               </span>
             </div>
@@ -80,57 +80,57 @@ export function VoteChart({
         </div>
 
         {/* Labels & Stats */}
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-3 gap-2 md:grid-cols-3 md:gap-6">
           {/* Home */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-orange-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" />
-              <span className="text-xs font-black uppercase tracking-wider truncate max-w-[80px]">
+          <div className="space-y-1 md:space-y-2">
+            <div className="flex items-center gap-1 md:gap-2">
+              <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-orange-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" />
+              <span className="text-[9px] md:text-xs font-black uppercase tracking-wider truncate max-w-[50px] md:max-w-[80px]">
                 {homeTeamName}
               </span>
             </div>
             <div className="flex flex-col">
-              <span className="text-2xl font-black text-orange-500">
+              <span className="text-lg md:text-2xl font-black text-orange-500">
                 {Math.round(homePercent)}%
               </span>
-              <span className="text-[10px] font-bold text-muted-foreground uppercase tabular-nums">
-                {homeVotes.toLocaleString()} Votes
+              <span className="text-[8px] md:text-[10px] font-bold text-muted-foreground uppercase tabular-nums">
+                {homeVotes.toLocaleString()}
               </span>
             </div>
           </div>
 
           {/* Draw */}
-          <div className="space-y-2 text-center">
-            <div className="flex items-center justify-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.4)]" />
-              <span className="text-xs font-black uppercase tracking-wider">
+          <div className="space-y-1 md:space-y-2 text-center">
+            <div className="flex items-center justify-center gap-1 md:gap-2">
+              <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.4)]" />
+              <span className="text-[9px] md:text-xs font-black uppercase tracking-wider">
                 Draw
               </span>
             </div>
             <div className="flex flex-col">
-              <span className="text-2xl font-black text-yellow-500">
+              <span className="text-lg md:text-2xl font-black text-yellow-500">
                 {Math.round(drawPercent)}%
               </span>
-              <span className="text-[10px] font-bold text-muted-foreground uppercase tabular-nums">
-                {drawVotes.toLocaleString()} Votes
+              <span className="text-[8px] md:text-[10px] font-bold text-muted-foreground uppercase tabular-nums">
+                {drawVotes.toLocaleString()}
               </span>
             </div>
           </div>
 
           {/* Away */}
-          <div className="space-y-2 text-right">
-            <div className="flex items-center justify-end gap-2">
-              <span className="text-xs font-black uppercase tracking-wider truncate max-w-[80px]">
+          <div className="space-y-1 md:space-y-2 text-right">
+            <div className="flex items-center justify-end gap-1 md:gap-2">
+              <span className="text-[9px] md:text-xs font-black uppercase tracking-wider truncate max-w-[50px] md:max-w-[80px]">
                 {awayTeamName}
               </span>
-              <div className="w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.4)]" />
+              <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.4)]" />
             </div>
             <div className="flex flex-col">
-              <span className="text-2xl font-black text-blue-500">
+              <span className="text-lg md:text-2xl font-black text-blue-500">
                 {Math.round(awayPercent)}%
               </span>
-              <span className="text-[10px] font-bold text-muted-foreground uppercase tabular-nums">
-                {awayVotes.toLocaleString()} Votes
+              <span className="text-[8px] md:text-[10px] font-bold text-muted-foreground uppercase tabular-nums">
+                {awayVotes.toLocaleString()}
               </span>
             </div>
           </div>

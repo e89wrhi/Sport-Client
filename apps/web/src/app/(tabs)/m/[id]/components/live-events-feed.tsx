@@ -29,7 +29,7 @@ export function LiveEventsFeed({ events }: LiveEventsFeedProps) {
   };
 
   return (
-    <div className="absolute bottom-6 left-6 w-[320px] z-30 pointer-events-none">
+    <div className="fixed md:absolute bottom-4 md:bottom-6 left-4 md:left-6 w-[calc(100%-2rem)] md:w-[320px] z-30 pointer-events-none">
       {/* Fade mask */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent rounded-2xl pointer-events-none" />
 

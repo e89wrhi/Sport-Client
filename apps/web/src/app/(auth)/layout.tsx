@@ -30,7 +30,7 @@ export default function AuthLayout({
                 width={220}
                 alt="logo"
                 className="shrink-0 rounded-sm h-19 w-20 drop-shadow-lg transition-transform group-hover:scale-105"
-                src={'/sport.png'}
+                src={'/logo.png'}
               />
               <h1 className="text-3xl md:text-5xl font-black tracking-tight">
                 Sport App

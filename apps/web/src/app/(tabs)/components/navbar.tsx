@@ -26,7 +26,7 @@ export function SportNavBar({ userProfile }: NavBarProps) {
             height={50}
             width={50}
             alt="logo"
-            src={'/sport.png'}
+            src={'/logo.png'}
             className="h-10 w-10"
           />
           <p>Sports</p>

@@ -1,5 +1,4 @@
 import { getCurrentUser } from '@/lib/api/user/get-current';
-import { SportNavMobile } from './components/mobile-nav';
 import { SportNavBar } from './components/navbar';
 import { auth } from '@/auth';
 
@@ -20,7 +19,6 @@ export default async function SportLayout({ children }: SportLayoutProps) {
   return (
     <div className="flex w-full min-h-screen">
       <SportNavBar userProfile={userProfile} />
-      <SportNavMobile userProfile={userProfile} />
       <div className="w-full flex-1">{children}</div>
     </div>
   );

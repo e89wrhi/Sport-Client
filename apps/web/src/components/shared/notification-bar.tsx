@@ -9,50 +9,57 @@ export default function NotificationBar() {
   const [isVisible, setIsVisible] = useState(true);
 
   if (!isVisible) return null;
+  
   return (
-    <div className="flex flex-col">
-      {' '}
-      <div
-        className={cn(
-          'w-full bg-muted/20 border-b backdrop-blur-sm transition-all duration-300 animate-in fade-in',
-          'border-border'
-        )}
-      >
-        <div className="container mx-auto px-4 h-10 flex items-center justify-between">
-          <div className="flex items-center gap-2.5 min-w-0">
-            <div className="text-muted-foreground flex-shrink-0">
-              <Github className="h-4 w-4" />
-            </div>
-            <p className="text-xs font-medium text-foreground/80 tracking-tight whitespace-nowrap truncate">
-              Developer Preview: Currently running with simulated(mock) data
-              streams for testing.
-            </p>
+    <div className="relative group overflow-hidden border-b border-border/50 bg-card/50 backdrop-blur-md text-foreground shadow-sm transition-colors duration-500">
+      {/* Animated accent gradient */}
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-secondary/5 opacity-50" />
+      
+      <div className="container mx-auto px-4 h-11 flex items-center justify-between relative z-10">
+        <div className="flex items-center gap-4 min-w-0">
+          <div className="flex items-center gap-2 rounded-full bg-primary/10 px-2.5 py-1 border border-primary/20">
+            <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
+            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-primary">Mock Data</span>
           </div>
+          
+          <p className="text-[11px] font-bold tracking-tight text-foreground/60 whitespace-nowrap truncate md:block hidden">
+            Developer Preview: Experience high-fidelity simulated sports data & real-time events.
+          </p>
+          <p className="text-[11px] font-bold tracking-tight text-foreground/60 whitespace-nowrap truncate md:hidden block">
+            Dev Preview: Mock data enabled.
+          </p>
+        </div>
 
-          <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 md:gap-4">
+          <div className="flex items-center h-5 rounded-lg bg-muted border border-border/50 p-0.5 overflow-hidden">
             <Link
-              href={`https://github.com/e89wrhi/sports-client`}
+              href="https://github.com/e89wrhi/sports-client"
               target="_blank"
-              className="text-[11px] font-bold hover:underline underline-offset-4 text-foreground/90 transition-colors px-2 py-0.5"
+              className="flex items-center px-2 h-full text-[9px] font-black uppercase tracking-wider text-muted-foreground hover:text-foreground hover:bg-background rounded-sm transition-all"
             >
               Client
             </Link>
+            <div className="w-px h-2 bg-border mx-0.5" />
             <Link
-              href={`https://github.com/e89wrhi/sports-net`}
+              href="https://github.com/e89wrhi/sports-net"
               target="_blank"
-              className="text-[11px] font-bold hover:underline underline-offset-4 text-foreground/90 transition-colors px-2 py-0.5"
+              className="flex items-center px-2 h-full text-[9px] font-black uppercase tracking-wider text-muted-foreground hover:text-foreground hover:bg-background rounded-sm transition-all"
             >
               Backend
             </Link>
-            <button
-              onClick={() => setIsVisible(false)}
-              className="text-muted-foreground hover:text-foreground transition-colors p-1"
-            >
-              <X className="h-3.5 w-3.5" />
-            </button>
           </div>
+          
+          <button
+            onClick={() => setIsVisible(false)}
+            className="flex h-6 w-6 items-center justify-center rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-all"
+          >
+            <X className="h-3 w-3" />
+          </button>
         </div>
       </div>
+      
+      {/* Bottom accent border line */}
+      <div className="absolute bottom-0 left-0 h-[1px] w-full bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
     </div>
   );
 }

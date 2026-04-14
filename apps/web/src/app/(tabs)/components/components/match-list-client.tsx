@@ -33,6 +33,11 @@ const TOPIC_OPTIONS = [
     icon: '/champions_league.png',
     label: 'Bundesliga',
   },
+  {
+    value: MatchLeague.SerieA,
+    icon: '/champions_league.png',
+    label: 'Serie A',
+  },
 ];
 
 const LOCATION_OPTIONS = [
@@ -198,8 +203,8 @@ export default function MatchesClient(props: Props) {
 
         {/* success view */}
         {!isLoading && !isError && allItems.length !== 0 && (
-          <div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          <div className="pb-20">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
               {allItems.map((item, index) => (
                 <MatchesItem
                   key={item.Id}

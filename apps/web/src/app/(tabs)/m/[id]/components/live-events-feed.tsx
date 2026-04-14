@@ -29,32 +29,40 @@ export function LiveEventsFeed({ events }: LiveEventsFeedProps) {
   };
 
   return (
-    <div className="fixed md:absolute bottom-4 md:bottom-6 left-4 md:left-6 w-[calc(100%-2rem)] md:w-[320px] z-30 pointer-events-none">
-      {/* Fade mask */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent rounded-2xl pointer-events-none" />
-
-      <div className="relative flex flex-col gap-2 max-h-[300px] overflow-hidden">
+    <div className="fixed bottom-6 left-6 z-40 w-[340px] hidden xl:block pointer-events-none">
+      <div className="relative flex flex-col gap-3">
+        <div className="flex items-center gap-2 mb-2 px-4 py-1.5 rounded-full bg-primary/20 backdrop-blur-xl border border-primary/30 w-fit">
+          <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Live Commentary</span>
+        </div>
+        
         <AnimatePresence initial={false}>
-          {visibleEvents.map((event) => (
+          {visibleEvents.map((event, index) => (
             <motion.div
               key={event.Id}
-              initial={{ opacity: 0, x: -30, y: 10 }}
-              animate={{ opacity: 1, x: 0, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-              className="flex items-start gap-2 px-3 py-2 rounded-full 
-                         bg-white/10 backdrop-blur-md border border-white/20
-                         text-white text-xs shadow-lg"
+              initial={{ opacity: 0, x: -50, scale: 0.9 }}
+              animate={{ 
+                opacity: index === visibleEvents.length - 1 ? 1 : 0.6, 
+                x: 0, 
+                scale: 1 
+              }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+              className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-black/60 backdrop-blur-2xl border border-white/10 shadow-2xl"
             >
-              <span className="font-mono text-[10px] opacity-60">
-                {event.Time.toDateString()}&apos;
-              </span>
-
-              <span className="font-semibold text-primary">{event.Title}</span>
-
-              <span className="opacity-80 truncate">
-                {getEventIcon(event.Type)} {event.Title}
-              </span>
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-white/10 text-lg">
+                {getEventIcon(event.Type)}
+              </div>
+              <div className="flex flex-col gap-0.5 min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-black text-primary uppercase">Event</span>
+                  <span className="h-1 w-1 rounded-full bg-white/20" />
+                  <span className="text-[10px] font-medium text-white/40">Recently</span>
+                </div>
+                <p className="text-sm font-bold text-white truncate leading-none">
+                  {event.Title}
+                </p>
+              </div>
             </motion.div>
           ))}
         </AnimatePresence>

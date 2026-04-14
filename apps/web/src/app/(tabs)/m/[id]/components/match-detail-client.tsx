@@ -30,6 +30,22 @@ import { Button } from '@/components/ui/button';
 import { PredictMatchDialog } from './predict-match-dialog';
 import { useSession } from 'next-auth/react';
 import { AuthGuardDialog } from '@/components/shared/auth-guard-dialog';
+import Image from 'next/image';
+
+const teamIcons: Record<string, string> = {
+  Arsenal: '/arsenal.png',
+  Chelsea: '/chelsea.png',
+  'Man United': '/manutd.png',
+  'Man City': '/mancity.png',
+  Tottenham: '/tottenham.png',
+  'Real Madrid': '/laliga.webp',
+  Barcelona: '/laliga.webp',
+  'Bayern Munich': '/champions_league.png',
+  Dortmund: '/champions_league.png',
+  'AC Milan': '/champions_league.png',
+  'Inter Milan': '/champions_league.png',
+  Liverpool: '/premier_league.png',
+};
 
 interface Props {
   id: string;
@@ -149,10 +165,13 @@ export default function MatchDetailClient({ id }: Props) {
     return <EmptyView itemsname="match" className="" />;
   }
 
-  const isLive = data.Status === 'live';
+  const isLive = data.Status.toLowerCase() === 'live';
   const formattedDate = data.StartAt
     ? format(new Date(data.StartAt), 'PPP p')
     : 'TBD';
+
+  const homeIcon = teamIcons[data.HomeTeam] || '/logo.png';
+  const awayIcon = teamIcons[data.AwayTeam] || '/logo.png';
 
   const handleOpenPrediction = () => {
     if (status !== 'authenticated') {
@@ -165,110 +184,139 @@ export default function MatchDetailClient({ id }: Props) {
   };
 
   return (
-    <DetailWidthWrapper className="max-w-6xl">
+    <DetailWidthWrapper className="relative max-w-6xl">
+      {/* Ambient background effects */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="absolute -top-[10%] -left-[10%] h-[40%] w-[40%] rounded-full bg-primary/5 blur-[120px]" />
+        <div className="absolute top-[20%] -right-[10%] h-[50%] w-[50%] rounded-full bg-secondary/5 blur-[120px]" />
+      </div>
+
       <DetailHeader />
 
       <div className="mt-6 flex flex-col items-center gap-8 pb-20">
         {/* League & Status Badge */}
-        <div className="flex flex-col items-center gap-2">
-          <div className="flex items-center gap-2 text-muted-foreground uppercase tracking-wider text-sm font-semibold">
-            <TrophyIcon className="w-4 h-4" />
-            <span>{data.League}</span>
+        <div className="flex flex-col items-center gap-4">
+          <div className="flex items-center gap-2 rounded-full bg-muted/50 px-4 py-1.5 backdrop-blur-md">
+            <TrophyIcon className="h-4 w-4 text-primary" />
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">
+              {data.League}
+            </span>
           </div>
-          <Badge
-            variant={isLive ? 'destructive' : 'secondary'}
-            className="text-lg px-4 py-1"
-          >
-            {data.Status}
-          </Badge>
-          {data.Status !== MatchStatus.Over && (
-            <Button variant="outline" onClick={handleOpenPrediction}>
-              <Sparkles className="mr-2 h-4 w-4" />
-              Predict with AI
-            </Button>
-          )}
-        </div>
-
-        {/* Scoreboard */}
-        <div className="relative w-full flex items-center justify-between max-w-6xl px-4 md:px-12 py-8 md:py-16 bg-card/80 backdrop-blur-sm rounded-[2rem] md:rounded-[3rem] shadow-xl overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-
-          {/* Home Team */}
-          <div className="flex flex-col items-center gap-2 md:gap-4 flex-1 z-10">
-            <div className="relative">
-              <Avatar className="w-16 h-16 md:w-36 md:h-36 border-2 md:border-4 border-muted/50 p-1 md:p-2 bg-background/50 backdrop-blur transition-transform group-hover:scale-105 duration-500">
-                <AvatarImage
-                  src={data.HomeTeam}
-                  alt={data.HomeTeam}
-                  className="object-contain"
-                />
-                <AvatarFallback className="text-xl md:text-3xl font-bold">
-                  {data.HomeTeam.substring(0, 1).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-              <div className="absolute -bottom-1 -right-1 md:-bottom-2 md:-right-2 bg-orange-500 w-4 h-4 md:w-6 md:h-6 rounded-full border-2 md:border-4 border-card flex items-center justify-center">
-                <div className="w-1 md:w-1.5 h-1 md:h-1.5 rounded-full bg-white animate-pulse" />
-              </div>
-            </div>
-            <h2 className="text-sm md:text-3xl font-black text-center tracking-tight line-clamp-2">
-              {data.HomeTeam}
-            </h2>
-            <p className="text-[10px] md:text-xs text-muted-foreground uppercase font-black tracking-widest opacity-50">
-              Home
-            </p>
-          </div>
-
-          {/* Score */}
-          <div className="flex flex-col items-center gap-1 md:gap-3 mx-2 md:mx-6 z-10">
-            <div className="text-3xl md:text-8xl font-black tabular-nums tracking-tighter flex items-center gap-2 md:gap-4 drop-shadow-2xl">
-              <span className="text-primary">{data.HomeTeamScore}</span>
-              <span className="text-muted-foreground/10">:</span>
-              <span>{data.AwayTeamScore}</span>
-            </div>
-            {isLive ? (
-              <Badge
-                variant="destructive"
-                className="animate-pulse px-2 md:px-4 py-0.5 md:py-1 font-black text-[8px] md:text-xs uppercase tracking-[0.2em]"
+          <div className="flex items-center gap-4">
+            <Badge
+              variant={isLive ? 'destructive' : 'secondary'}
+              className="text-lg px-6 py-1.5 rounded-full shadow-lg"
+            >
+              {data.Status}
+            </Badge>
+            {data.Status !== MatchStatus.Over && (
+              <Button
+                variant="outline"
+                onClick={handleOpenPrediction}
+                className="rounded-full shadow-lg transition-all hover:scale-105"
               >
-                Live
-              </Badge>
-            ) : (
-              <span className="text-muted-foreground/40 font-bold text-[8px] md:text-sm tracking-widest uppercase">
-                FT
-              </span>
+                <Sparkles className="mr-2 h-4 w-4 text-primary" />
+                AI Prediction
+              </Button>
             )}
           </div>
+        </div>
 
-          {/* Away Team */}
-          <div className="flex flex-col items-center gap-2 md:gap-4 flex-1 z-10">
-            <div className="relative">
-              <Avatar className="w-16 h-16 md:w-36 md:h-36 border-2 md:border-4 border-muted/50 p-1 md:p-2 bg-background/50 backdrop-blur transition-transform group-hover:scale-105 duration-500">
-                <AvatarImage
-                  src={data.AwayTeam}
-                  alt={data.AwayTeam}
-                  className="object-contain"
-                />
-                <AvatarFallback className="text-xl md:text-3xl font-bold">
-                  {data.AwayTeam.substring(0, 2).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
+        {/* Premium Scoreboard */}
+        <div className="relative w-full overflow-hidden rounded-[40px] border border-border/40 bg-card/40 p-8 shadow-2xl backdrop-blur-xl md:p-16 group">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 transition-opacity duration-1000 group-hover:opacity-100" />
+          
+          <div className="relative z-10 grid grid-cols-[1fr_auto_1fr] items-center gap-6 md:gap-16">
+            {/* Home Team */}
+            <div className="flex flex-col items-center gap-6 text-center">
+              <div className="relative">
+                <div className="absolute -inset-6 rounded-full bg-primary/10 blur-2xl transition-all duration-700 group-hover:bg-primary/20" />
+                <Avatar className="h-24 w-24 md:h-48 md:w-48 border-4 border-background bg-background p-4 shadow-2xl transition-transform duration-700 group-hover:scale-110">
+                  <AvatarImage
+                    src={homeIcon}
+                    alt={data.HomeTeam}
+                    className="object-contain"
+                  />
+                  <AvatarFallback className="text-4xl font-black">
+                    {data.HomeTeam.substring(0, 1).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="absolute -bottom-2 -right-2 h-6 w-6 rounded-full border-4 border-card bg-orange-500 shadow-xl md:h-10 md:w-10">
+                  <div className="h-full w-full animate-pulse rounded-full bg-white/20" />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <h2 className="text-xl md:text-5xl font-black tracking-tighter uppercase line-clamp-2">
+                  {data.HomeTeam}
+                </h2>
+                <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-muted-foreground/40">Home</span>
+              </div>
             </div>
-            <h2 className="text-sm md:text-3xl font-black text-center tracking-tight line-clamp-2">
-              {data.AwayTeam}
-            </h2>
-            <p className="text-[10px] md:text-xs text-muted-foreground uppercase font-black tracking-widest opacity-50">
-              Away
-            </p>
+
+            {/* Score & Time */}
+            <div className="flex flex-col items-center justify-center gap-6">
+              <div className="flex flex-col items-center gap-4">
+                <div className="flex items-center gap-4 md:gap-8 text-5xl md:text-[120px] font-black leading-none tracking-tighter tabular-nums drop-shadow-2xl">
+                  <span className={isLive ? 'animate-pulse text-primary' : ''}>
+                    {data.HomeTeamScore}
+                  </span>
+                  <span className="text-muted-foreground/10">:</span>
+                  <span className={isLive ? 'animate-pulse text-primary' : ''}>
+                    {data.AwayTeamScore}
+                  </span>
+                </div>
+                {isLive ? (
+                  <div className="flex items-center gap-2 rounded-full bg-destructive/10 px-6 py-2 border border-destructive/20">
+                    <div className="h-2 w-2 animate-pulse rounded-full bg-destructive" />
+                    <span className="text-xs font-black uppercase tracking-[0.3em] text-destructive">
+                      Live Now
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 rounded-full bg-muted-foreground/10 px-6 py-2 text-muted-foreground">
+                    <span className="text-xs font-black uppercase tracking-[0.3em]">
+                      Full Time
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Away Team */}
+            <div className="flex flex-col items-center gap-6 text-center">
+              <div className="relative">
+                <div className="absolute -inset-6 rounded-full bg-secondary/10 blur-2xl transition-all duration-700 group-hover:bg-secondary/20" />
+                <Avatar className="h-24 w-24 md:h-48 md:w-48 border-4 border-background bg-background p-4 shadow-2xl transition-transform duration-700 group-hover:scale-110">
+                  <AvatarImage
+                    src={awayIcon}
+                    alt={data.AwayTeam}
+                    className="object-contain"
+                  />
+                  <AvatarFallback className="text-4xl font-black">
+                    {data.AwayTeam.substring(0, 1).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+              </div>
+              <div className="space-y-1">
+                <h2 className="text-xl md:text-5xl font-black tracking-tighter uppercase line-clamp-2">
+                  {data.AwayTeam}
+                </h2>
+                <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-muted-foreground/40">Away</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="w-full gap-8 mt-4">
-          {/* Voting Simulation & Chart */}
+        <div className="w-full max-w-4xl space-y-8">
+          {/* Voting Section */}
           <div className="space-y-6">
-            <div className="flex items-center justify-between px-2">
-              <h3 className="text-xl font-black tracking-tight">
-                Real-time Fan Voting
-              </h3>
+            <div className="flex items-center justify-between px-4">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-1 rounded-full bg-primary" />
+                <h3 className="text-2xl font-black tracking-tight">
+                  Match Prediction Market
+                </h3>
+              </div>
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
                 <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
@@ -328,39 +376,50 @@ export default function MatchDetailClient({ id }: Props) {
 
         {/* Info Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl">
-          <div className="bg-card/40 backdrop-blur border border-border/40 rounded-3xl p-6 flex flex-col items-center justify-center gap-3 text-center shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center">
-              <CalendarIcon className="w-5 h-5 text-primary" />
+          {[
+            {
+              icon: CalendarIcon,
+              label: 'Kickoff',
+              value: formattedDate,
+              color: 'text-primary',
+              bg: 'bg-primary/10',
+            },
+            {
+              icon: MapPinIcon,
+              label: 'Venue',
+              value: 'Main Stadium',
+              color: 'text-indigo-500',
+              bg: 'bg-indigo-500/10',
+            },
+            {
+              icon: UserIcon,
+              label: 'Referee',
+              value: data.Referee,
+              color: 'text-amber-500',
+              bg: 'bg-amber-500/10',
+            },
+          ].map((item, i) => (
+            <div
+              key={i}
+              className="group relative overflow-hidden rounded-[32px] border border-border/40 bg-card/40 p-1 px-8 py-10 transition-all duration-500 hover:-translate-y-1 hover:bg-card hover:shadow-2xl"
+            >
+              <div className={`absolute top-0 right-0 h-32 w-32 translate-x-12 -translate-y-12 rounded-full opacity-10 blur-3xl transition-opacity group-hover:opacity-20 ${item.bg}`} />
+              
+              <div className="relative flex flex-col items-center justify-center gap-4 text-center">
+                <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${item.bg} transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6`}>
+                  <item.icon className={`h-6 w-6 ${item.color}`} />
+                </div>
+                <div className="space-y-1">
+                  <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/50">
+                    {item.label}
+                  </p>
+                  <p className="text-sm font-bold tracking-tight">
+                    {item.value}
+                  </p>
+                </div>
+              </div>
             </div>
-            <div className="space-y-1">
-              <p className="text-[10px] items-center gap-2 text-muted-foreground uppercase tracking-wider font-black">
-                Kickoff Time
-              </p>
-              <p className="font-bold text-sm">{formattedDate}</p>
-            </div>
-          </div>
-          <div className="bg-card/40 backdrop-blur border border-border/40 rounded-3xl p-6 flex flex-col items-center justify-center gap-3 text-center shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-2xl bg-indigo-500/10 flex items-center justify-center">
-              <MapPinIcon className="w-5 h-5 text-indigo-500" />
-            </div>
-            <div className="space-y-1">
-              <p className="text-[10px] items-center gap-2 text-muted-foreground uppercase tracking-wider font-black">
-                Stadium Venue
-              </p>
-              <p className="font-bold text-sm">-</p>
-            </div>
-          </div>
-          <div className="bg-card/40 backdrop-blur border border-border/40 rounded-3xl p-6 flex flex-col items-center justify-center gap-3 text-center shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-2xl bg-amber-500/10 flex items-center justify-center">
-              <UserIcon className="w-5 h-5 text-amber-500" />
-            </div>
-            <div className="space-y-1">
-              <p className="text-[10px] items-center gap-2 text-muted-foreground uppercase tracking-wider font-black">
-                Match Referee
-              </p>
-              <p className="font-bold text-sm">{data.Referee}</p>
-            </div>
-          </div>
+          ))}
         </div>
 
         <LiveEventsFeed events={streamedEvents} matchId={id} />

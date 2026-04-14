@@ -25,10 +25,19 @@ export default async function MatchListsPage({ searchParams }: PageProps) {
   const location = searchParamsResolved.location || LocationType.Global;
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
-      <Suspense fallback={<LoadingView />}>
-        <DataLoader type={type} location={location} />
-      </Suspense>
+    <div className="relative min-h-screen bg-white dark:bg-black">
+      {/* Ambient background effects */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-[10%] -left-[10%] h-[40%] w-[40%] rounded-full bg-primary/5 blur-[120px]" />
+        <div className="absolute top-[20%] -right-[10%] h-[50%] w-[50%] rounded-full bg-secondary/5 blur-[120px]" />
+        <div className="absolute -bottom-[10%] left-[20%] h-[40%] w-[40%] rounded-full bg-primary/5 blur-[120px]" />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Suspense fallback={<LoadingView />}>
+          <DataLoader type={type} location={location} />
+        </Suspense>
+      </div>
     </div>
   );
 }

@@ -10,7 +10,7 @@ export function SidebarHeaderLayout() {
     <Button
       variant={'ghost'}
       onClick={() => setOpen(!open)}
-      className="flex text-blue-500 items-center font-bold text-xl tracking-tight hover:scale-110 transition"
+      className="flex text-yellow-500 items-center font-bold text-xl tracking-tight hover:scale-110 transition"
     >
       {/* ICON / LOGO */}
       <div className="flex h-8 w-8 ml-2 items-center justify-center shrink-0">
@@ -26,7 +26,7 @@ export function SidebarHeaderLayout() {
       {/* TITLE – auto hidden when collapsed */}
       <span
         className={cn(
-          'whitespace-nowrap transition-all duration-200',
+          'whitespace-nowrap transition-all uppercase duration-200',
           !open && 'opacity-0 w-0 overflow-hidden'
         )}
       >

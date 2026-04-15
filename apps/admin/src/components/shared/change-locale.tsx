@@ -19,10 +19,7 @@ export function LocaleChange({ pathname }: { pathname: string }) {
     document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000`;
 
     // Update the URL
-    const segments = pathname.split('/');
-    segments[1] = locale;
-    router.replace(segments.join('/'));
-    //router.push(`/${locale}/` + url);
+    router.replace('/');
   }
 
   return (

@@ -31,27 +31,31 @@ export default async function DashboardLayout({
   const defaultOpen = cookieStore.get('sidebar:state')?.value === 'true';
 
   return (
-    <SidebarProvider
-      defaultOpen={defaultOpen}
-      className="flex bg-white dark:bg-black min-h-screen flex-col"
-    >
-      <AppSidebar userProfile={userProfile} />
-      <div
-        id="content"
-        className={cn(
-          'ml-auto w-full max-w-full',
-          'peer-data-[state=collapsed]:w-[calc(100%-var(--sidebar-width-icon)-1rem)]',
-          'peer-data-[state=expanded]:w-[calc(100%-var(--sidebar-width))]',
-          'sm:transition-[width] sm:duration-200 sm:ease-linear',
-          'flex h-svh flex-col',
-          'group-data-[scroll-locked=1]/body:h-full',
-          'has-[main.fixed-main]:group-data-[scroll-locked=1]/body:h-svh'
-        )}
+    <div className="flex flex-col min-h-screen">
+      <NotificationBar />
+      <SidebarProvider
+        defaultOpen={defaultOpen}
+        className="flex bg-white dark:bg-black flex-1"
       >
-        <NotificationBar />
-        <DashboardHeader className="" />
-        {children}
-      </div>
-    </SidebarProvider>
+        <AppSidebar userProfile={userProfile} />
+        <div
+          id="content"
+          className={cn(
+            'ml-auto w-full max-w-full',
+            'peer-data-[state=collapsed]:w-[calc(100%-var(--sidebar-width-icon)-1rem)]',
+            'peer-data-[state=expanded]:w-[calc(100%-var(--sidebar-width))]',
+            'sm:transition-[width] sm:duration-200 sm:ease-linear',
+            'flex h-svh flex-col',
+            'group-data-[scroll-locked=1]/body:h-full',
+            'has-[main.fixed-main]:group-data-[scroll-locked=1]/body:h-svh'
+          )}
+        >
+          <DashboardHeader className="" />
+          <main className="flex-1 overflow-y-auto">
+            {children}
+          </main>
+        </div>
+      </SidebarProvider>
+    </div>
   );
 }

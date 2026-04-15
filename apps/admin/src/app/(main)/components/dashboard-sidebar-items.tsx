@@ -1,3 +1,5 @@
+'use client';
+
 import { ReactNode } from 'react';
 import {
   SidebarGroup,
@@ -10,6 +12,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { NavLink, type NavGroup } from '@/types/sidebar';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 
 export function NavGroupp({ title, items }: NavGroup) {
@@ -44,40 +47,52 @@ const NavBadge = ({ children }: { children: ReactNode }) => (
   <Badge className="rounded-full px-1 py-0 text-xs">{children}</Badge>
 );
 const SidebarMenuLink = ({ item, href }: { item: NavLink; href: string }) => {
-  const { setOpenMobile } = useSidebar();
+  const { setOpenMobile, state } = useSidebar();
   const isActive = checkIsActive(href, item.url);
   const IconComponent = item.icon;
-  console.info(`icon-${IconComponent}`);
+  const isCollapsed = state === 'collapsed';
+
   return (
     <SidebarMenuItem>
       <SidebarMenuButton
         asChild
         tooltip={item.title}
         variant="default"
-        className={`
-          rounded-full my-2 flex items-center transition-all duration-200
-          ${
-            isActive
-              ? 'text-white dark:text-black bg-orange-500 px-2 text-lg font-semibold'
-              : 'text-black dark:text-white hover:text-foreground text-lg'
-          }
-        `}
+        className={cn(
+          'rounded-xl my-1 flex items-center transition-all duration-300 group overflow-hidden',
+          isActive
+            ? 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 font-bold shadow-[0_0_15px_rgba(234,179,8,0.1)] border-yellow-500/20 border'
+            : 'text-muted-foreground hover:bg-accent hover:text-foreground',
+          isCollapsed ? 'justify-center px-0' : 'px-2'
+        )}
       >
         <Link
           href={item.url}
           onClick={() => setOpenMobile(false)}
-          className="flex"
+          className="flex w-full py-2 items-center"
         >
-          <div className="flex flex-row items-center space-x-3">
+          <div className={cn(
+            "flex items-center w-full",
+            isCollapsed ? "justify-center" : "px-2"
+          )}>
             {IconComponent && (
-              <IconComponent
-                className={`shrink-0 transition-all duration-100 ${
-                  isActive ? 'h-5 w-5' : 'h-5 w-5'
-                }`}
-              />
+              <div className={cn(
+                "p-1.5 rounded-lg transition-colors shrink-0 flex items-center justify-center",
+                isActive 
+                  ? "bg-yellow-500 text-white shadow-lg shadow-yellow-500/20" 
+                  : "group-hover:bg-yellow-500/10 group-hover:text-yellow-500"
+              )}>
+                <IconComponent className="h-4 w-4" />
+              </div>
             )}
-            <span>{item.title}</span>
-            {item.badge && <NavBadge>{item.badge}</NavBadge>}
+            {!isCollapsed && (
+              <>
+                <span className="ml-3 flex-1 text-sm truncate transition-opacity duration-300">
+                  {item.title}
+                </span>
+                {item.badge && <NavBadge>{item.badge}</NavBadge>}
+              </>
+            )}
           </div>
         </Link>
       </SidebarMenuButton>

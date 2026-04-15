@@ -4,10 +4,12 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  useSidebar,
 } from '@/components/ui/sidebar';
 import React from 'react';
 import Image from 'next/image';
 import { ChevronUp, LogOut, Settings, User } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,6 +31,8 @@ interface Props {
 export default function SidebarFooterLayout(props: Props) {
   const { name, image, status, onOpen } = props;
   const router = useRouter();
+  const { state } = useSidebar();
+  const isCollapsed = state === 'collapsed';
 
   return (
     <SidebarMenu>
@@ -37,22 +41,29 @@ export default function SidebarFooterLayout(props: Props) {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className={cn(
+                "transition-all duration-300",
+                "data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              )}
             >
               <Image
                 src={image ?? '/avatar-fallback.png'}
                 alt={name}
                 width={36}
                 height={36}
-                className="h-8 w-8 rounded-full object-cover"
+                className="h-8 w-8 rounded-full object-cover shrink-0"
               />
-              <div className="grid flex-1 text-left text-sm leading-tight sidebar-title">
-                <span className="truncate font-semibold">{name}</span>
-                <span className="truncate text-xs text-muted-foreground">
-                  {status}
-                </span>
-              </div>
-              <ChevronUp className="ml-auto size-4" />
+              {!isCollapsed && (
+                <>
+                  <div className="grid flex-1 text-left text-sm leading-tight sidebar-title ml-2">
+                    <span className="truncate font-semibold">{name}</span>
+                    <span className="truncate text-xs text-muted-foreground">
+                      {status}
+                    </span>
+                  </div>
+                  <ChevronUp className="ml-auto size-4" />
+                </>
+              )}
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -78,7 +89,6 @@ export default function SidebarFooterLayout(props: Props) {
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem onClick={onOpen}>

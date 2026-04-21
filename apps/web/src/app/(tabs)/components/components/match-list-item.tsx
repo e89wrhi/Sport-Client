@@ -1,9 +1,8 @@
 import { MatchDto } from '@/types/api/match';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { format } from 'date-fns';
-import { CalendarIcon, TrophyIcon } from 'lucide-react';
+import { CalendarIcon } from 'lucide-react';
 
 interface MatchCardProps {
   item: MatchDto;
@@ -45,27 +44,9 @@ export function MatchesItem({ item, onClick }: MatchCardProps) {
       onClick={() => onClick(item.Id)}
       className="group relative cursor-pointer overflow-hidden border-none bg-card/40 transition-all duration-500 hover:bg-card hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.3)] hover:-translate-y-1.5 active:scale-[0.98] rounded-[32px] backdrop-blur-sm"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-      
       <CardContent className="relative p-6 md:p-8">
-        {/* League and Date Info */}
-        <div className="mb-8 flex items-center justify-between">
-          <div className="flex items-center gap-2 rounded-full bg-muted/50 px-3 py-1.5 backdrop-blur-md">
-            <TrophyIcon className="h-3.5 w-3.5 text-primary" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-              {item.League}
-            </span>
-          </div>
-          <div className="flex items-center gap-4 text-xs font-semibold">
-            <div className="flex items-center gap-1.5 text-muted-foreground">
-              <CalendarIcon className="h-3.5 w-3.5" />
-              <span>{formattedDate}</span>
-            </div>
-          </div>
-        </div>
-
         {/* Main Scoreboard Area */}
-        <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8">
+        <div className="grid grid-cols-[1fr_auto_1fr] mt-6 items-center gap-4 md:gap-8">
           {/* Home Team */}
           <div className="flex flex-col items-center gap-4 text-center">
             <div className="relative">
@@ -110,8 +91,16 @@ export function MatchesItem({ item, onClick }: MatchCardProps) {
               </div>
             ) : (
               <div className="flex flex-col items-center gap-1">
-                <span className="text-sm font-black text-muted-foreground/40 tracking-wider">VS</span>
-                <span className="text-lg md:text-xl font-black tracking-tight">{formattedTime}</span>
+                <span className="text-sm font-black text-muted-foreground/40 tracking-wider">
+                  VS
+                </span>
+                <span className="text-lg md:text-xl font-black tracking-tight">
+                  {formattedTime}
+                </span>
+                <div className="flex items-center gap-1.5 text-muted-foreground">
+                  <CalendarIcon className="h-3.5 w-3.5" />
+                  <span>{formattedDate}</span>
+                </div>
               </div>
             )}
           </div>

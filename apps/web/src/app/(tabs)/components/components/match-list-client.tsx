@@ -14,6 +14,7 @@ import MatchesLoading from './match-list-loading';
 import { LocationType } from '@/types/enums/location';
 import DetailWidthWrapper from '@/components/layout/detail-width-wrapper';
 import NotificationBar from '@/components/shared/notification-bar';
+import { UpcomingSportView } from '@/components/layout/state/upcoming-sport-view';
 
 interface Props {
   type: string;
@@ -62,6 +63,7 @@ export default function MatchesClient(props: Props) {
   const [localLocation, setLocalLocation] = useState(
     location || LocationType.Global
   );
+  const [activeSport, setActiveSport] = useState('football');
 
   // Fetch initial data
   const { data, isLoading, isError, error, refetch } = useGetMatches(
@@ -74,23 +76,24 @@ export default function MatchesClient(props: Props) {
 
   // Update items when data changes
   useEffect(() => {
-    if (data && !loadedOffsetsRef.current.has(currentOffset)) {
+    const isSoccer = activeSport === 'football';
+    if (data && isSoccer && !loadedOffsetsRef.current.has(currentOffset)) {
       // Mark this offset as loaded
       loadedOffsetsRef.current.add(currentOffset);
 
       if (currentOffset === 0) {
-        // Reset etems on filter change
+        // Reset items on filter change
         setAllItems(data);
         // Clear loaded offsets when filters change
         loadedOffsetsRef.current.clear();
         loadedOffsetsRef.current.add(0);
       } else {
-        // Append new etems for load more
+        // Append new items for load more
         setAllItems((prev) => [...prev, ...data]);
       }
       setIsLoadingMore(false);
     }
-  }, [data, currentOffset]);
+  }, [data, currentOffset, activeSport]);
 
   // Reset offset when filters change (but not offset itself)
   useEffect(() => {
@@ -125,6 +128,22 @@ export default function MatchesClient(props: Props) {
     setAllItems([]);
     setHasMore(true);
     loadedOffsetsRef.current.clear();
+  };
+
+  const handleSportChange = (id: string) => {
+    if (id === activeSport) return;
+
+    setActiveSport(id);
+    setCurrentOffset(0);
+    setAllItems([]);
+    loadedOffsetsRef.current.clear();
+
+    if (id !== 'football') {
+      setHasMore(false);
+    } else {
+      setHasMore(true);
+      refetch();
+    }
   };
 
   // Load more function
@@ -168,8 +187,12 @@ export default function MatchesClient(props: Props) {
     router.push(`/m/${id}`);
   };
 
+  const isSoccer = activeSport === 'football';
+
   return (
-    <DetailWidthWrapper>
+    <DetailWidthWrapper className="px-3 md:px-6">
+      <div className="h-10"></div>
+      <NotificationBar />
       <MatchsListHeader
         topic={localTopic}
         location={localLocation}
@@ -177,17 +200,18 @@ export default function MatchesClient(props: Props) {
         locations={LOCATION_OPTIONS}
         onLocationChange={handleLocationChange}
         onTopicChange={handleTopicChange}
+        activeSport={activeSport}
+        onSportChange={handleSportChange}
       />
-      <NotificationBar />
 
       {/* main list layout */}
-      <div>
-        {isLoading && (!allItems || allItems.length === 0) && (
+      <div className="mt-8">
+        {isSoccer && isLoading && (!allItems || allItems.length === 0) && (
           <MatchesLoading />
         )}
 
         {/* error state */}
-        {isError && allItems.length == 0 && (
+        {isSoccer && isError && allItems.length == 0 && (
           <ErrorView
             itemsname="match list"
             error={error.message}
@@ -196,13 +220,22 @@ export default function MatchesClient(props: Props) {
           />
         )}
 
-        {/* empty state */}
-        {!isLoading && !isError && allItems.length === 0 && (
-          <EmptyView itemsname="match list" className="" />
+        {/* empty state or non-soccer upcoming state */}
+        {!isSoccer ? (
+          <UpcomingSportView
+            sportId={activeSport}
+            sportName={activeSport.toUpperCase()}
+          />
+        ) : (
+          !isLoading &&
+          !isError &&
+          allItems.length === 0 && (
+            <EmptyView itemsname="match list" className="py-20" />
+          )
         )}
 
         {/* success view */}
-        {!isLoading && !isError && allItems.length !== 0 && (
+        {isSoccer && !isLoading && !isError && allItems.length !== 0 && (
           <div className="pb-20">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
               {allItems.map((item, index) => (

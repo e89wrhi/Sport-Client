@@ -35,7 +35,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
                 position="top-center"
                 toastOptions={{
                   classNames: {
-                    toast: 'bg-background text-foreground border border-border',
+                    toast: 'text-foreground border border-border',
                     description: 'text-muted-foreground',
                   },
                   duration: 2000,

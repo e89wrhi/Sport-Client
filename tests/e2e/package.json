@@ -1,0 +1,12 @@
+{
+  "name": "@sport/e2e",
+  "private": true,
+  "scripts": {
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui"
+  },
+  "devDependencies": {
+    "@sport/config": "*",
+    "@playwright/test": "*"
+  }
+}

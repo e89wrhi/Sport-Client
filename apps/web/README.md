@@ -1,6 +1,6 @@
-# Web App - Sport App
+# Web App - SnowBall
 
-The Web App is the primary user-facing application of the Sport App ecosystem. It delivers an interactive and dynamic platform for users to discover football matches, participate in voting, and access AI-driven match predictions.
+The Web App is the primary user-facing application of the SnowBall App ecosystem. It delivers an interactive and dynamic platform for users to discover football matches, participate in voting, and access AI-driven match predictions.
 
 ## 🌟 Key Features
 

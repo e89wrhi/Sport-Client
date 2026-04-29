@@ -5,13 +5,13 @@ import icon from '@/assets/favicon.png';
 const site_url = env.NEXT_PUBLIC_APP_URL;
 
 export const siteConfig: SiteConfig = {
-  name: 'Sport',
-  description: 'Sport in .NET!',
+  name: 'SnowBall',
+  description: 'The ultimate sports analytics platform for fans and bettors.',
   url: site_url,
   ogImage: icon.src,
   links: {
-    twitter: 'https://twitter.com/sport',
-    github: 'https://github.com/sport',
+    twitter: 'https://twitter.com/snowball',
+    github: 'https://github.com/snowball',
   },
-  mailSupport: 'support@sport.com',
+  mailSupport: 'support@snowball.com',
 };

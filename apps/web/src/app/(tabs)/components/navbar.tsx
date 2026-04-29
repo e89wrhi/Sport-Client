@@ -36,7 +36,7 @@ export function SportNavBar({ userProfile }: NavBarProps) {
           </div>
           <div className="flex flex-col -space-y-1">
             <span className="text-2xl font-black tracking-tighter">
-              Sport-Net
+              SnowBall
             </span>
           </div>
         </Link>

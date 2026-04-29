@@ -40,7 +40,7 @@ export function AuthGuardDialog({
   const actionConfig = {
     vote: {
       icon: <Heart className="w-12 h-12 text-red-500" />,
-      title: 'Join Sports to interact',
+      title: 'Join SnowBall to interact',
       description: 'Sign in to vote for youre favourite Team.',
     },
     predict: {

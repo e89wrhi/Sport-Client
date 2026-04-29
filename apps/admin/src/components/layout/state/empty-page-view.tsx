@@ -15,21 +15,21 @@ export default function EmptyPageView() {
             src={'/_logo/logo1.png'}
             height={200}
             width={200}
-            alt="sport"
+            alt="snowball"
             className="h-20 w-20 md:h-30 md:w-30 hidden dark:block"
           />
           <Image
             src={'/_logo/logo4.png'}
             height={200}
             width={200}
-            alt="sport"
+            alt="snowball"
             className="h-20 w-20 md:h-30 md:w-30 block dark:hidden"
           />
         </div>
 
         <div className="flex flex-col justify-center space-y-5">
           <p className="text-sm font-semibold uppercase tracking-widest">
-            Sport
+            SnowBall
           </p>
           <h1 className="text-5xl sm:text-7xl font-extrabold leading-tight">
             Page not found

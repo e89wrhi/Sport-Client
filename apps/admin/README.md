@@ -1,6 +1,6 @@
-# Admin Portal - Sport App
+# Admin Portal - SnowBall
 
-The Admin Portal is a dedicated internal application for managing the Sport App platform. It equips administrators with the necessary tools to efficiently oversee football matches, broadcast live events, and configure platform settings.
+The Admin Portal is a dedicated internal application for managing the SnowBall platform. It equips administrators with the necessary tools to efficiently oversee football matches, broadcast live events, and configure platform settings.
 
 ## 🎯 Features
 

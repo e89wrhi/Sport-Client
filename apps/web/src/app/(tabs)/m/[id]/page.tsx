@@ -34,7 +34,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `Sport - ${match.HomeTeam} vs ${match.AwayTeam}`,
+    title: `SnowBall - ${match.HomeTeam} vs ${match.AwayTeam}`,
     description: `${match.HomeTeam} vs ${match.AwayTeam}`,
     openGraph: {
       title: `${match.HomeTeam} vs ${match.AwayTeam}`,

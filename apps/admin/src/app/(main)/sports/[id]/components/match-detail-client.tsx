@@ -34,7 +34,7 @@ interface Props {
 }
 
 export const metadata: Metadata = {
-  title: 'Sport | Match',
+  title: 'SnowBall | Match',
 };
 
 export default function MatchDetailClient({ id }: Props) {

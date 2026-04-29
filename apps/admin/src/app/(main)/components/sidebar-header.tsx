@@ -30,7 +30,7 @@ export function SidebarHeaderLayout() {
           !open && 'opacity-0 w-0 overflow-hidden'
         )}
       >
-        Sports
+        SnowBall
       </span>
     </Button>
   );

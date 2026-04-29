@@ -32,7 +32,7 @@ export default function ErrorView(props: Props) {
           src={'/error.png'}
           height={600}
           width={600}
-          alt="sports"
+          alt="snowball"
           className="h-50 w-50"
         />
       </div>

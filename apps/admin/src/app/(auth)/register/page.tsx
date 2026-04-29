@@ -54,7 +54,7 @@ export default function RegisterPage() {
               Create Admin Account
             </h2>
             <p className="mt-2 text-neutral-400">
-              Join the sport administration team
+              Join the snowball administration team
             </p>
           </div>
 

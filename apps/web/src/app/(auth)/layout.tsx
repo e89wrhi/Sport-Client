@@ -33,7 +33,7 @@ export default function AuthLayout({
                 src={'/logo.png'}
               />
               <h1 className="text-3xl md:text-5xl font-black tracking-tight">
-                Sport App
+                SnowBall
               </h1>
               <p className="text-neutral-400 text-lg font-semibold mt-2">
                 matches, intellegent interactions.
@@ -52,7 +52,7 @@ export default function AuthLayout({
           className="mt-8 text-center"
         >
           <p className="text-[10px] text-neutral-600 uppercase tracking-[0.3em] font-medium">
-            SPORT APP • v1.0
+            SNOWBALL APP • v1.0
           </p>
         </motion.div>
       </motion.div>

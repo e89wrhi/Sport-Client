@@ -104,7 +104,7 @@ export default function MatchsListHeader(props: Props) {
                       height={20}
                       width={20}
                       alt={topic}
-                      src={topics.find((t) => t.value === topic)!.icon}
+                      src={topics.find((t) => t.value === topic)!.icon || '/placeholder.png'}
                       className="h-4 w-4 bg-white rounded-full object-cover"
                     />
                   )}
@@ -125,7 +125,7 @@ export default function MatchsListHeader(props: Props) {
                         height={24}
                         width={24}
                         alt={option.label}
-                        src={option.icon}
+                        src={option.icon || '/placeholder.png'}
                         className="h-5 w-5 bg-white rounded-full object-cover"
                       />
                       <span className="font-bold">{option.label}</span>
